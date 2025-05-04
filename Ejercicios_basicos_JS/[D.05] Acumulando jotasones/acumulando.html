@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>[D.05] Acumulando jotasones</head>
+<body>
+    <script src="jotasones.js"></script>
+<script>
+    if (!localStorage.getItem("jotasones")) {
+        localStorage.setItem("jotasones", JSON.stringify(jotasones));
+        alert("Se guardo en localStorage.");
+    } else {
+        alert("Ya estaba guardado en localStorage.");
+    }
+
+    const datos = JSON.parse(localStorage.getItem("jotasones"));
+    console.log("Contenido:", datos);
+
+    const ultimo = datos[datos.length - 1];
+    const nuevo = { ...ultimo, id: ultimo.id + 1 };
+
+    datos.push(nuevo);
+    localStorage.setItem("jotasones", JSON.stringify(datos));
+
+    alert(`Nuevo ID agregado: ${nuevo.id}`);
+</script>
+
+</body>
+</html>

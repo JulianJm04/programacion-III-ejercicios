@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>[D.04] Agregando y quitando propiedades</title>
+</head>
+<body>
+
+<script src="Ejercicios_basicos_JS\[D.02] Colección de productos JSON\productos.js"></script>
+
+<script>
+    productos.forEach(producto => {
+        if (producto.precio % 2 !== 0) {
+            producto.moneda = "usd";
+        }
+    });
+
+    console.log("Productos despues de agregar moneda:");
+    console.log(productos);
+
+    productos.forEach(producto => {
+        if (producto.precio % 2 === 0) {
+            delete producto.fechaVencimiento;
+        }
+    });
+
+    console.log("Productos despues de eliminar fechaVencimiento:");
+    console.log(productos);
+</script>
+
+</body>
+</html>
