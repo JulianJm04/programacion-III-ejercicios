@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acumulando Jotasones III</title>
+</head>
+<body>
+
+    <h2>Acumulando JSON - Ejercicio D.07</h2>
+    <script src="/Ejercicios_basicos_JS\[D.05] Acumulando jotasones\jotasones.js"></script>
+
+    <script>
+        let datos;
+
+        if (localStorage.getItem("jotasones")) {
+        const reiniciar = confirm("¿Queres reiniciar el localStorage?");
+        if (reiniciar) {
+            localStorage.setItem("jotasones", JSON.stringify(jotasones));
+            alert("Se reinicio el localStorage.");
+            datos = jotasones;
+        } else {
+            alert("Se continúa con el localStorage existente.");
+            datos = JSON.parse(localStorage.getItem("jotasones"));
+        }
+        } else {
+        localStorage.setItem("jotasones", JSON.stringify(jotasones));
+        alert("Se guardo en localStorage.");
+        datos = jotasones;
+        }
+
+        console.log("Contenido actual:", datos);
+
+        const ultimo = datos[datos.length - 1];
+        const nuevo = { ...ultimo, id: ultimo.id + 1 };
+        datos.push(nuevo);
+        localStorage.setItem("jotasones", JSON.stringify(datos));
+
+        alert(`Nuevo ID agregado: ${nuevo.id}`);
+        console.log("Despues de agregar:", datos);
+
+        const idEliminar = parseInt(prompt("¿Que ID queres eliminar?"));
+        const datosActuales = JSON.parse(localStorage.getItem("jotasones"));
+        const index = datosActuales.findIndex(obj => obj.id === idEliminar);
+
+        if (index !== -1) {
+        datosActuales.splice(index, 1);
+        localStorage.setItem("jotasones", JSON.stringify(datosActuales));
+        alert(`Se elimino el jotason con id ${idEliminar}.`);
+        } else {
+        alert("No se encontro ningun jotason con ese id.");
+        }
+
+        console.log("Despues de eliminar:", datosActuales);
+    </script>
+
+</body>
+</html>
