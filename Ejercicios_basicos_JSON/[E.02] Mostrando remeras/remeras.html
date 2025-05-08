@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>E.02 - Mostrando Remeras</title>
+    <style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 5px;
+        text-align: center;
+    }
+    img {
+        width: 50px;
+        height: 50px;
+    }
+    </style>
+</head>
+<body>
+
+    <h2>Listado de Remeras</h2>
+
+    <input type="button" id="btnMostrar" value="Mostrar remeras" />
+    <div id="listado"></div>
+
+    <script src="remeras.js"></script>
+    <script>
+    const clave = "remeras";
+
+    function obtenerRemeras() {
+        return JSON.parse(localStorage.getItem(clave));
+    }
+
+    function guardarRemerasIniciales() {
+        localStorage.setItem(clave, JSON.stringify(remeras));
+    }
+
+    function mostrarTablaRemeras(arr) {
+        let html = `
+        <table>
+        <tr>
+            <th>ID</th>
+            <th>Slogan</th>
+            <th>Talle</th>
+            <th>Precio</th>
+            <th>Color</th>
+            <th>Fabricante</th>
+            <th>Logo</th>
+            <th>País</th>
+            <th>Ciudad</th>
+        </tr>`;
+
+        arr.forEach(r => {
+        html += `
+            <tr>
+            <td>${r.id}</td>
+            <td>${r.slogan}</td>
+            <td>${r.size}</td>
+            <td>${r.price}</td>
+            <td>${r.color}</td>
+            <td>${r.manofacturer.name}</td>
+            <td><img src="${r.manofacturer.logo}" alt="logo" /></td>
+            <td>${r.manofacturer.location.country}</td>
+            <td>${r.manofacturer.location.city}</td>
+            </tr>`;
+        });
+
+        html += "</table>";
+        document.getElementById("listado").innerHTML = html;
+    }
+
+    if (!localStorage.getItem(clave)) {
+        guardarRemerasIniciales();
+        alert("Se guardaron las remeras en localStorage.");
+    } else {
+        alert("Las remeras ya estaban guardadas en localStorage.");
+    }
+
+    document.getElementById("btnMostrar").onclick = function () {
+        mostrarTablaRemeras(obtenerRemeras());
+    };
+    </script>
+
+</body>
+</html>
